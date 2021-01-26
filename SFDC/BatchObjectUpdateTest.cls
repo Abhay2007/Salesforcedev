@@ -103,58 +103,5 @@ public class HibuBatchObjectUpdateTest {
         
     }
     
-    /**cause an error while updating an account. locked record?
-        @isTest
-    public static void testBatchObjectAccountUpdateError(){
-        
-        //Create user
-        User testUser = HibuTUtilDataSetup.createSecondaryUser();//createUser();
-        SYstem.debug('testUserId '+testUser.id);
-        
-        //create an account
-        Account testAccount = HibuTUtilDataSetup.createTestAccount();
-        testAccount.OwnerId=testUser.Id;
-        update testAccount;
-        SYstem.debug('testAccountId '+testAccount.id);
-        
-        //lock the account so it can't get updated
-        Account [] accts = [SELECT Id FROM Account where id =: testAccount.id FOR UPDATE ];
-        
-        //create a batch job
-        Batch_Process__c batchProcess = new Batch_Process__c();
-        batchProcess.Description__c='Alignment Update';
-        batchProcess.Object_List__c='Account';
-        batchProcess.Field_List__c='TAV4__Primary_Alignment__c';
-        batchProcess.New_Value__c='new alignment';
-        batchProcess.Status__c='Pending';
-        batchProcess.OwnerId=testUser.id;
-        insert batchProcess;
-        SYstem.debug('batchProcessId '+batchProcess.id);
-        
-        //create an attachment for the input csv against the batch process
-        Attachment inputCsv = new Attachment();
-        inputCsv.Body = Blob.valueOf('Account Id \n '+testAccount.id);
-        inputCsv.ParentId = batchProcess.id; //tie this pdf to the batch object
-        inputCsv.OwnerId = batchProcess.OwnerId;
-        inputCsv.name = 'input.csv';
-        inputCsv.ContentType = 'text/csv';
-        insert inputCsv;
-        SYstem.debug('AttachmentId '+inputCsv.Id);
-        
-        Test.startTest();
-
-        
-        HibuBatchObjectUpdate b = new HibuBatchObjectUpdate(batchProcess.Id);
-		Database.executeBatch(b,200);
-		Test.stopTest();
-        
-        //assert some stuff
-        //Task tsk = [SELECT id FROM Task WHERE whatid =: batchProcess.Id LIMIT 1];
-   		//System.debug('tsk '+tsk);
-        
-        Batch_Process__c batchProcessResult = [SELECT id, object_list__c, field_list__c, new_value__c,description__c, status__c, ownerId FROM Batch_Process__c WHERE  id =: batchProcess.Id LIMIT 1];  
-        System.debug('batchProcessResult.Status__c '+batchProcessResult.Status__c);
-       	System.assert(batchProcessResult.Status__c.equals('Error'));
-        
-    }**/
+    
 }
