@@ -32,7 +32,6 @@ public class ContProductBillingSummary{
         showNorecordsMsg = false;
         displayPage = true;
         displayAccSpendData = true;
-        displayYearSel = false;
         acc = accServ.getAccountById(accId);
         tableHearderWrapperList = null;
     }
@@ -59,7 +58,6 @@ public class ContProductBillingSummary{
         monthMap.put(9,'Sep ');
         monthMap.put(10,'Oct ');
         monthMap.put(11,'Nov ');
-        monthMap.put(12,'Dec ');
         date currentDate = Date.today();
         
         
@@ -184,6 +182,7 @@ public class ContProductBillingSummary{
             column12 = 'Dec';
         }
         public void put(String columnName , String value){
+		    system.debug('test the given input');
             if(columnName == 'column1'){
                 column1 = value;
             }
